@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPROS - {% block title %}Система опросов{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>OPROS</h1>
+            <nav>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'surveys:survey_list' %}">Мои опросы</a>
+                    <a href="{% url 'surveys:create_survey' %}">Создать опрос</a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'surveys:admin_dashboard' %}">адмника</a>
+                    {% endif %}
+                    <span class="user-info">{{ user.username }}</span>
+                    <a href="{% url 'logout' %}" class="logout-btn">Выйти</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Войти</a>
+                    <a href="{% url 'register' %}">Регистрация</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>© 2026 OPROS</p>
+    </footer>
+</body>
+</html>
